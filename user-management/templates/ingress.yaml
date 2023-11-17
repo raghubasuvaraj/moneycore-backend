@@ -1,0 +1,19 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/ingress.class: nginx
+  name: usermanagement-ingress
+  namespace: {{ .Values.usermanagement.meta.namespace }}
+spec:
+  rules:
+  - host: backend.sagespidy.com
+    http:
+      paths:
+      - path: /user/**
+        pathType: Prefix
+        backend:
+          service:
+            name: usermanagement
+            port:
+              number: 82

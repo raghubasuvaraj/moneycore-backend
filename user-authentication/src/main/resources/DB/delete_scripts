@@ -1,0 +1,22 @@
+use moneycoredev;
+update account_type_list set is_deleted=false ;
+update activity_list set is_deleted=false ;
+update branch_list set is_deleted=false ;
+update city_list set is_deleted=false ;
+update country_list set is_deleted=false ;
+update currency_list set is_deleted=false ;
+update customer_segment_list set is_deleted=false ;
+update institution_list set is_deleted=false ;
+update language_list set is_deleted=false ;
+update mcc_list set is_deleted=false ;
+update region_list set is_deleted=false ;
+update service_list set is_deleted=false ;
+update status_list set is_deleted=false ;
+update status_reason_code set is_deleted=false ;
+update title_list set is_deleted=false ;
+update transaction_code_list set is_deleted=false ;
+update vip_list set is_deleted=false ;
+update wallet set is_deleted=false ;
+update wallet_type set is_deleted=false ;
+
+commit;

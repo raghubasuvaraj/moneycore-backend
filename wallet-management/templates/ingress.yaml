@@ -1,0 +1,19 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/ingress.class: nginx
+  name: walletmanagement-ingress
+  namespace: {{ .Values.walletmanagement.meta.namespace }}
+spec:
+  rules:
+  - host: backend.sagespidy.com
+    http:
+      paths:
+      - path: /wallet/**
+        pathType: Prefix
+        backend:
+          service:
+            name: walletmanagement
+            port:
+              number: 82

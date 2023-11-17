@@ -1,2 +1,1 @@
-# moneycore-backend
-moneycore-backend
+# money-core-multimodule

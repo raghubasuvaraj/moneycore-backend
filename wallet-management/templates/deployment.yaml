@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.walletmanagement.meta.name }}
+  namespace: {{ .Values.walletmanagement.meta.namespace }}
+spec:
+  selector:
+    matchLabels:
+      app: {{ .Values.walletmanagement.meta.label }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.walletmanagement.meta.label }}
+    spec:
+      topologySpreadConstraints:
+        - maxSkew: 1
+          topologyKey: topology.kubernetes.io/zone
+          whenUnsatisfiable: ScheduleAnyway
+          labelSelector:
+            matchLabels:
+              app: {{ .Values.walletmanagement.meta.label }}
+      containers:
+        - name: walletmanagement
+          image: {{ .Values.walletmanagement.image.repository }}:{{ .Values.walletmanagement.image.tag }}
+          imagePullPolicy: IfNotPresent
+          resources:
+            requests:
+              memory: {{ .Values.walletmanagement.resources.requests.memory }}Mi
+              cpu: {{ .Values.walletmanagement.resources.requests.cpu }}m
+            limits:
+              memory: {{ .Values.walletmanagement.resources.limits.memory }}Mi
+              cpu: {{ .Values.walletmanagement.resources.limits.cpu }}m

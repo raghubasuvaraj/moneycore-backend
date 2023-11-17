@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.rolemanagement.meta.name }}
+  namespace: {{ .Values.rolemanagement.meta.namespace }}
+spec:
+  selector:
+    app:  {{ .Values.rolemanagement.meta.label }}
+  ports:
+    - port: {{ .Values.rolemanagement.service.port }}
+      targetPort: {{ .Values.rolemanagement.service.targetport }}
+      nodePort: {{ .Values.rolemanagement.service.nodePort }}
+  type: {{ .Values.rolemanagement.service.type }}

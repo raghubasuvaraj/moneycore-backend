@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.rolemanagement.meta.name }}
+  namespace: {{ .Values.rolemanagement.meta.namespace }}
+spec:
+  selector:
+    matchLabels:
+      app: {{ .Values.rolemanagement.meta.label }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.rolemanagement.meta.label }}
+    spec:
+      topologySpreadConstraints:
+        - maxSkew: 1
+          topologyKey: topology.kubernetes.io/zone
+          whenUnsatisfiable: ScheduleAnyway
+          labelSelector:
+            matchLabels:
+              app: {{ .Values.rolemanagement.meta.label }}
+      containers:
+        - name: rolemanagement
+          image: {{ .Values.rolemanagement.image.repository }}:{{ .Values.rolemanagement.image.tag }}
+          imagePullPolicy: IfNotPresent
+          resources:
+            requests:
+              memory: {{ .Values.rolemanagement.resources.requests.memory }}Mi
+              cpu: {{ .Values.rolemanagement.resources.requests.cpu }}m
+            limits:
+              memory: {{ .Values.rolemanagement.resources.limits.memory }}Mi
+              cpu: {{ .Values.rolemanagement.resources.limits.cpu }}m

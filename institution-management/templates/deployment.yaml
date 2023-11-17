@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.institutionmanagement.meta.name }}
+  namespace: {{ .Values.institutionmanagement.meta.namespace }}
+spec:
+  selector:
+    matchLabels:
+      app: {{ .Values.institutionmanagement.meta.label }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.institutionmanagement.meta.label }}
+    spec:
+      topologySpreadConstraints:
+        - maxSkew: 1
+          topologyKey: topology.kubernetes.io/zone
+          whenUnsatisfiable: ScheduleAnyway
+          labelSelector:
+            matchLabels:
+              app: {{ .Values.institutionmanagement.meta.label }}
+      containers:
+        - name: institutionmanagement
+          image: {{ .Values.institutionmanagement.image.repository }}:{{ .Values.institutionmanagement.image.tag }}
+          imagePullPolicy: IfNotPresent
+          resources:
+            requests:
+              memory: {{ .Values.institutionmanagement.resources.requests.memory }}Mi
+              cpu: {{ .Values.institutionmanagement.resources.requests.cpu }}m
+            limits:
+              memory: {{ .Values.institutionmanagement.resources.limits.memory }}Mi
+              cpu: {{ .Values.institutionmanagement.resources.limits.cpu }}m

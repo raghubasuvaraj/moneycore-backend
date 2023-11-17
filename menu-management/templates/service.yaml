@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.menumanagement.meta.name }}
+  namespace: {{ .Values.menumanagement.meta.namespace }}
+spec:
+  selector:
+    app:  {{ .Values.menumanagement.meta.label }}
+  ports:
+    - port: {{ .Values.menumanagement.service.port }}
+      targetPort: {{ .Values.menumanagement.service.targetport }}
+      nodePort: {{ .Values.menumanagement.service.nodePort }}
+  type: {{ .Values.menumanagement.service.type }}

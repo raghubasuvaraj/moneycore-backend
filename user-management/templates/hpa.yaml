@@ -1,0 +1,17 @@
+apiVersion: autoscaling/v2beta1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: {{ .Values.usermanagement.meta.name }}-mem
+  namespace: {{ .Values.usermanagement.meta.namespace }}
+spec:
+  minReplicas: {{ .Values.usermanagement.meta.minReplicas }}
+  maxReplicas: {{ .Values.usermanagement.meta.maxReplicas }}
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: {{ .Values.usermanagement.meta.name }}
+  metrics:
+    - type: Resource
+      resource:
+        name: memory
+        targetAverageUtilization: {{ .Values.usermanagement.resources.targetAverageUtilization }}

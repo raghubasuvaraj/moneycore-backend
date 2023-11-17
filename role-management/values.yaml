@@ -1,0 +1,23 @@
+rolemanagement :
+  meta:
+    name: rolemanagement
+    label: rolemanagement
+    namespace: dev
+    minReplicas: 1
+    maxReplicas: 10
+  image:
+    repository: localhost:5000/rolemanagement
+    tag: latest
+  service:
+    type: NodePort
+    port: 82
+    nodePort: 31009
+    targetport: 8080
+  resources:
+    requests:
+      cpu: 200
+      memory: 1024
+    limits:
+      cpu: 2000
+      memory: 1024
+    targetAverageUtilization: 85

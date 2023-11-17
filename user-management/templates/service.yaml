@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.usermanagement.meta.name }}
+  namespace: {{ .Values.usermanagement.meta.namespace }}
+spec:
+  selector:
+    app:  {{ .Values.usermanagement.meta.label }}
+  ports:
+    - port: {{ .Values.usermanagement.service.port }}
+      targetPort: {{ .Values.usermanagement.service.targetport }}
+      nodePort: {{ .Values.usermanagement.service.nodePort }}
+  type: {{ .Values.usermanagement.service.type }}

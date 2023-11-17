@@ -1,0 +1,9 @@
+apiVersion: v2
+appVersion: 1.0.0
+version: 0.1.0
+type: application
+description:
+maintainers:
+  - email: shailender.birmaan2@gmail.com
+    name: Shalender Singh
+name: rolemanagement

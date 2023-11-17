@@ -1,0 +1,4 @@
+target/*.jar
+*.jar
+*/target/*.jar
+*/*/target/*.jar

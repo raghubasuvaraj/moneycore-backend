@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.menumanagement.meta.name }}
+  namespace: {{ .Values.menumanagement.meta.namespace }}
+spec:
+  selector:
+    matchLabels:
+      app: {{ .Values.menumanagement.meta.label }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.menumanagement.meta.label }}
+    spec:
+      topologySpreadConstraints:
+        - maxSkew: 1
+          topologyKey: topology.kubernetes.io/zone
+          whenUnsatisfiable: ScheduleAnyway
+          labelSelector:
+            matchLabels:
+              app: {{ .Values.menumanagement.meta.label }}
+      containers:
+        - name: menumanagement
+          image: {{ .Values.menumanagement.image.repository }}:{{ .Values.menumanagement.image.tag }}
+          imagePullPolicy: IfNotPresent
+          resources:
+            requests:
+              memory: {{ .Values.menumanagement.resources.requests.memory }}Mi
+              cpu: {{ .Values.menumanagement.resources.requests.cpu }}m
+            limits:
+              memory: {{ .Values.menumanagement.resources.limits.memory }}Mi
+              cpu: {{ .Values.menumanagement.resources.limits.cpu }}m

@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.institutionmanagement.meta.name }}
+  namespace: {{ .Values.institutionmanagement.meta.namespace }}
+spec:
+  selector:
+    app:  {{ .Values.institutionmanagement.meta.label }}
+  ports:
+    - port: {{ .Values.institutionmanagement.service.port }}
+      targetPort: {{ .Values.institutionmanagement.service.targetport }}
+      nodePort: {{ .Values.institutionmanagement.service.nodePort }}
+  type: {{ .Values.institutionmanagement.service.type }}

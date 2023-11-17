@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.walletmanagement.meta.name }}
+  namespace: {{ .Values.walletmanagement.meta.namespace }}
+spec:
+  selector:
+    app:  {{ .Values.walletmanagement.meta.label }}
+  ports:
+    - port: {{ .Values.walletmanagement.service.port }}
+      targetPort: {{ .Values.walletmanagement.service.targetport }}
+      nodePort: {{ .Values.walletmanagement.service.nodePort }}
+  type: {{ .Values.walletmanagement.service.type }}

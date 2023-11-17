@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.clientmanagement.meta.name }}
+  namespace: {{ .Values.clientmanagement.meta.namespace }}
+spec:
+  selector:
+    matchLabels:
+      app: {{ .Values.clientmanagement.meta.label }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.clientmanagement.meta.label }}
+    spec:
+      topologySpreadConstraints:
+        - maxSkew: 1
+          topologyKey: topology.kubernetes.io/zone
+          whenUnsatisfiable: ScheduleAnyway
+          labelSelector:
+            matchLabels:
+              app: {{ .Values.clientmanagement.meta.label }}
+      containers:
+        - name: clientmanagement
+          image: {{ .Values.clientmanagement.image.repository }}:{{ .Values.clientmanagement.image.tag }}
+          imagePullPolicy: IfNotPresent
+          resources:
+            requests:
+              memory: {{ .Values.clientmanagement.resources.requests.memory }}Mi
+              cpu: {{ .Values.clientmanagement.resources.requests.cpu }}m
+            limits:
+              memory: {{ .Values.clientmanagement.resources.limits.memory }}Mi
+              cpu: {{ .Values.clientmanagement.resources.limits.cpu }}m

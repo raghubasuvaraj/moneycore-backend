@@ -1,0 +1,19 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/ingress.class: nginx
+  name: menumanagement-ingress
+  namespace: {{ .Values.menumanagement.meta.namespace }}
+spec:
+  rules:
+  - host: backend.sagespidy.com
+    http:
+      paths:
+      - path: /menu/**
+        pathType: Prefix
+        backend:
+          service:
+            name: menumanagement
+            port:
+              number: 82

@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.usermanagement.meta.name }}
+  namespace: {{ .Values.usermanagement.meta.namespace }}
+spec:
+  selector:
+    matchLabels:
+      app: {{ .Values.usermanagement.meta.label }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.usermanagement.meta.label }}
+    spec:
+      topologySpreadConstraints:
+        - maxSkew: 1
+          topologyKey: topology.kubernetes.io/zone
+          whenUnsatisfiable: ScheduleAnyway
+          labelSelector:
+            matchLabels:
+              app: {{ .Values.usermanagement.meta.label }}
+      containers:
+        - name: usermanagement
+          image: {{ .Values.usermanagement.image.repository }}:{{ .Values.usermanagement.image.tag }}
+          imagePullPolicy: IfNotPresent
+          resources:
+            requests:
+              memory: {{ .Values.usermanagement.resources.requests.memory }}Mi
+              cpu: {{ .Values.usermanagement.resources.requests.cpu }}m
+            limits:
+              memory: {{ .Values.usermanagement.resources.limits.memory }}Mi
+              cpu: {{ .Values.usermanagement.resources.limits.cpu }}m

@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.profilemanagement.meta.name }}
+  namespace: {{ .Values.profilemanagement.meta.namespace }}
+spec:
+  selector:
+    matchLabels:
+      app: {{ .Values.profilemanagement.meta.label }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.profilemanagement.meta.label }}
+    spec:
+      topologySpreadConstraints:
+        - maxSkew: 1
+          topologyKey: topology.kubernetes.io/zone
+          whenUnsatisfiable: ScheduleAnyway
+          labelSelector:
+            matchLabels:
+              app: {{ .Values.profilemanagement.meta.label }}
+      containers:
+        - name: profilemanagement
+          image: {{ .Values.profilemanagement.image.repository }}:{{ .Values.profilemanagement.image.tag }}
+          imagePullPolicy: IfNotPresent
+          resources:
+            requests:
+              memory: {{ .Values.profilemanagement.resources.requests.memory }}Mi
+              cpu: {{ .Values.profilemanagement.resources.requests.cpu }}m
+            limits:
+              memory: {{ .Values.profilemanagement.resources.limits.memory }}Mi
+              cpu: {{ .Values.profilemanagement.resources.limits.cpu }}m

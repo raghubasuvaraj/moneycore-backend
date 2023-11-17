@@ -1,0 +1,19 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/ingress.class: nginx
+  name: rolemanagement-ingress
+  namespace: {{ .Values.rolemanagement.meta.namespace }}
+spec:
+  rules:
+  - host: backend.sagespidy.com
+    http:
+      paths:
+      - path: /role/**
+        pathType: Prefix
+        backend:
+          service:
+            name: rolemanagement
+            port:
+              number: 82

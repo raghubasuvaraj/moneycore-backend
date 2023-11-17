@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.clientmanagement.meta.name }}
+  namespace: {{ .Values.clientmanagement.meta.namespace }}
+spec:
+  selector:
+    app:  {{ .Values.clientmanagement.meta.label }}
+  ports:
+    - port: {{ .Values.clientmanagement.service.port }}
+      targetPort: {{ .Values.clientmanagement.service.targetport }}
+      nodePort: {{ .Values.clientmanagement.service.nodePort }}
+  type: {{ .Values.clientmanagement.service.type }}

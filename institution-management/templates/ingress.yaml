@@ -1,0 +1,19 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/ingress.class: nginx
+  name: institutionmanagement-ingress
+  namespace: {{ .Values.institutionmanagement.meta.namespace }}
+spec:
+  rules:
+  - host: backend.sagespidy.com
+    http:
+      paths:
+      - path: /institution/**
+        pathType: Prefix
+        backend:
+          service:
+            name: institutionmanagement
+            port:
+              number: 82

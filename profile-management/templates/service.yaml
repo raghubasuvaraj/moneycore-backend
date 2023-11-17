@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.profilemanagement.meta.name }}
+  namespace: {{ .Values.profilemanagement.meta.namespace }}
+spec:
+  selector:
+    app:  {{ .Values.profilemanagement.meta.label }}
+  ports:
+    - port: {{ .Values.profilemanagement.service.port }}
+      targetPort: {{ .Values.profilemanagement.service.targetport }}
+      nodePort: {{ .Values.profilemanagement.service.nodePort }}
+  type: {{ .Values.profilemanagement.service.type }}
